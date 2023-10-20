@@ -42,16 +42,16 @@ data = data.drop(columns = ['q1', 'q2', 'q3','q4', 'q5', 'q6','q7', 'q8', 'q9', 
 #in ra các gia tri null
 print(data.isnull().sum())
 #xoa cac cot age null hoặc lấy giá trị mean, du doan
-# data = data[~data['age'].isnull()]
-mean_age = data['age'].mean().round()
-data['age'].fillna(mean_age, inplace=True)
+data = data[~data['age'].isnull()]
+# mean_age = data['age'].mean().round()
+# data['age'].fillna(mean_age, inplace=True)
 #kiem tra co bao dua ko ro gt
 data[data['sex_unknown'] == 1]['id'].unique()
 # có 1 dua nen xoa luon
 data = data[data['sex_unknown'] == 0]
 data = data.drop('sex_unknown', axis=1)
-data = data.groupby('id').median()
-# data = data.drop('id', axis = 1)
+# data = data.groupby('id').median()
+data = data.drop('id', axis = 1)
 
 
 # # # Chuẩn hóa Min-Max Scaling cho các thuộc tính
@@ -68,10 +68,10 @@ plt.figure(figsize=(15, 5))
 
 Elbow_M = KElbowVisualizer(KMeans(), k=10)
 Elbow_M.fit(data)
-# Elbow_M.show()
+Elbow_M.show()
 
-# plt.tight_layout()
-# plt.show()
+plt.tight_layout()
+plt.show()
 
 kmeans = KMeans(n_clusters = 5)
 
@@ -84,37 +84,3 @@ print('Silhouetter Average Score: %.3f' % score)
 num_clusters = 5
 centers = kmeans_ne(num_clusters, data)
 print(centers)
-
-
-
-# # # Sử dụng mapping cho cột 'smoking_status'
-# # label_mapping = {
-# #     'never smoked': 0,
-# #     'formerly smoked': 1,
-# #     'Unknown': 2,
-# #     'smokes': 3
-# # }
-# # data['smoking_status'] = data['smoking_status'].map(label_mapping)
-
-# # # Chỉ định danh sách các cột cần điền giá trị thiếu
-# # numeric_columns_float = ['plasma_glucose', 'bmi']
-# # data[numeric_columns_float] = data[numeric_columns_float].fillna(data[numeric_columns_float].mean())
-
-# # numeric_columns_int = ['age', 'blood_pressure', 'cholesterol', 'max_heart_rate', 'insulin']
-# # data[numeric_columns_int] = data[numeric_columns_int].fillna(data[numeric_columns_int].mean().round())
-
-# # # Loại bỏ các bản ghi có blood_pressure nhỏ hơn 90 hoặc lớn hơn 180
-# # data = data[(data['blood_pressure'] >= 90) & (data['blood_pressure'] <= 180)]
-
-# # numeric_columns = ['chest_pain_type', 'exercise_angina', 'hypertension', 'heart_disease', 'smoking_status']
-# # data[numeric_columns].fillna(data[numeric_columns].mode().iloc[0], inplace=True)
-
-# # # Chuẩn hóa Min-Max Scaling cho các thuộc tính
-# # columns_to_scale = ['age', 'blood_pressure', 'cholesterol', 'max_heart_rate', 'plasma_glucose', 'insulin', 'bmi']
-# # data[columns_to_scale] = ((data[columns_to_scale] - data[columns_to_scale].min()) / 
-# #                          (data[columns_to_scale].max() - data[columns_to_scale].min()))
-
-# # # Lưu dữ liệu đã chuẩn hóa vào một file mới
-# # data.to_csv("patient_normalization.csv", index=False)
-# # data.info()
-# # print("Dữ liệu đã chuẩn hóa đã được lưu vào file 'patient_normalization.csv'")
