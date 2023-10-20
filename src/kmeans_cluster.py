@@ -32,7 +32,7 @@ def cluster_info(num_clusters, data):
         print(f"Cụm {cluster_id}: {cluster_count} bệnh nhân ({cluster_count / len(data) * 100:.2f}%)")
 
 
-def kmeans_ne(num_clusters, data):
+def kmeans_algorithm(num_clusters, data):
     # Lấy tên cột và chuyển đổi data từ pandas => numpy
     columns_name = data.columns
     data = data.values
@@ -77,3 +77,7 @@ def kmeans_ne(num_clusters, data):
     # Hiển thị thông tin các cụm sau khi hoàn thành
     cluster_info(num_clusters, data)
     return centers
+
+
+
+kmeans_algorithm(5, pd.read_csv('./normalized_data.csv'))

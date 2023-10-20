@@ -3,7 +3,7 @@ from sklearn.cluster import KMeans
 import matplotlib.pyplot as plt
 
 # Đọc dữ liệu từ file CSV
-data = pd.read_csv("../output_data.csv")
+data = pd.read_csv("./normalization_data.csv")
 
 X = data.values
 
