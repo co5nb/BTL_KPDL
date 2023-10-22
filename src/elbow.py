@@ -1,25 +1,21 @@
 import pandas as pd
-from sklearn.cluster import KMeans
 import matplotlib.pyplot as plt
+from sklearn.cluster import KMeans
+from sklearn.metrics import silhouette_score
+from yellowbrick.cluster import KElbowVisualizer
 
-# Đọc dữ liệu từ file CSV
-data = pd.read_csv("./normalization_data.csv")
+data = pd.read_csv("./normalized_data.csv")
 
-X = data.values
+Elbow_M = KElbowVisualizer(KMeans(), k=10)
+Elbow_M.fit(data)
+Elbow_M.show()
 
-# Tính WCSS (Within-Cluster Sum of Squares) cho các số lượng cụm từ 1 đến max_clusters
-max_clusters = 10
-wcss = []
-for num_clusters in range(2, max_clusters + 1):
-    kmeans = KMeans(n_clusters=num_clusters, n_init=10)
-    kmeans.fit(X)
-    wcss.append(kmeans.inertia_)
-
-# Vẽ biểu đồ Elbow Method
-plt.figure(figsize=(10, 6))
-plt.plot(range(2, max_clusters + 1), wcss, marker='o')
-plt.xticks(range(2, max_clusters + 1))
-plt.title('Elbow Method')
-plt.xlabel('Number of Clusters')
-plt.ylabel('WCSS')
+plt.tight_layout()
 plt.show()
+
+kmeans = KMeans(n_clusters = 5)
+
+kmeans.fit_predict(data)
+
+score = silhouette_score(data, kmeans.labels_, metric='euclidean')
+print('Silhouetter Average Score: %.3f' % score)

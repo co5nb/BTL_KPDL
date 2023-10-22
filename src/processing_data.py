@@ -28,7 +28,7 @@ data = pd.get_dummies(data, columns=['sex'], dtype=np.int64)
 print(data[data['sex_transgender'] == 1]['id'].unique())
 print(data[data['sex_unknown'] == 1]['id'].unique())
 
-# Xóa "sex_transgender" vì chỉ có người
+# Xóa "sex_transgender" vì chỉ có 1 người
 data = data.drop('sex_transgender', axis=1)
 # Cộng tổng các cột phq1 đến phq9 thành cột "depression_severity"
 data['depression_severity'] = data[['phq1', 'phq2', 'phq3','phq4', 'phq5', 'phq6','phq7', 'phq8', 'phq9']].sum(axis=1)
