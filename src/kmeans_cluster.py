@@ -77,7 +77,3 @@ def kmeans_algorithm(num_clusters, data):
     # Hiển thị thông tin các cụm sau khi hoàn thành
     cluster_info(num_clusters, data)
     return centers
-
-
-
-kmeans_algorithm(5, pd.read_csv('./normalized_data.csv'))
