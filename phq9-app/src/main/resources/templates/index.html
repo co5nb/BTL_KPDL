@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>PQH-9</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            font-family: sans-serif;
+        }
+        .box-predict{
+            max-width: 900px;
+            margin-left: 110px;
+
+            border: 1px solid #F0F2F5;
+            border-radius: 10px;
+            padding: 15px;
+            background-color: #c1d3f5;
+        }
+        .form-partial{
+            padding: 0 10px;
+        }
+        .form-control:focus {
+            border-color: #000000;
+            box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(0, 0, 0, 0);
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-3">
+        <h1 class="text-center">Thang tự đánh giá trầm cảm PQH-9</h1>
+        <div class="box-predict d-flex">
+            <div class="box-predict-from">
+                <form id="form-predict"  method="post" action="/phq9/predict" enctype="multipart/form-data">
+                    <div class="form-predict-container d-flex">
+                        <div class="form-partial" style="width: 49%;">
+                            <div class="row justify-content-center">
+                                <div class="col-md-5">
+                                    <div class="form-group">
+                                        <label >Tuổi:</label>
+                                        <input type="number" class="form-control" name="age" min="12" max="57" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-5">
+                                    <div class="form-group">
+                                        <label >Giới tính:</label>
+                                        <select class="form-control" name="gender">
+                                            <option value="0">Nữ</option>
+                                            <option value="1">Nam</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group ">
+                                <label name="happiness_score">Bạn cảm thấy thế nào vào thời điểm này?</label>
+                                <select class="form-control" name="happiness_score">
+                                    <option value="0">Rất tệ</option>
+                                    <option value="1">Xấu</option>
+                                    <option value="2">Vừa phải</option>
+                                    <option value="3">Tốt</option>
+                                    <option value="4">Rất tốt</option>
+                                </select>
+                            </div>
+                            <div class="form-group ">
+                                <label>Ít hứng thú hoặc là không có niềm vui thích làm việc gì?</label>
+                                <select class="form-control" name="phq1">
+                                    <option value="0">Hầu như không</option>
+                                    <option value="1">Một vài ngày</option>
+                                    <option value="2">Hơn một nửa số thời gian</option>
+                                    <option value="3">Gần như mỗi ngày</option>
+                                </select>
+                            </div>
+                            <div class="form-group ">
+                                <label>Cảm thấy chán nản kiệt sức hoặc tuyệt vọng?</label>
+                                <select class="form-control" name="phq2">
+                                    <option value="0">Hầu như không</option>
+                                    <option value="1">Một vài ngày</option>
+                                    <option value="2">Hơn một nửa số thời gian</option>
+                                    <option value="3">Gần như mỗi ngày</option>
+                                </select>
+                            </div>
+                            <div class="form-group ">
+                                <label >Khó ngủ, ngủ không lâu hoặc ngủ quá nhiều?</label>
+                                <select class="form-control" name="phq3">
+                                    <option value="0">Hầu như không</option>
+                                    <option value="1">Một vài ngày</option>
+                                    <option value="2">Hơn một nửa số thời gian</option>
+                                    <option value="3">Gần như mỗi ngày</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label >Cảm thấy mệt mỏi hoặc thiếu năng lượng?</label>
+                                <select class="form-control" name="phq4">
+                                    <option value="0">Hầu như không</option>
+                                    <option value="1">Một vài ngày</option>
+                                    <option value="2">Hơn một nửa số thời gian</option>
+                                    <option value="3">Gần như mỗi ngày</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-partial" style="width: 49%;">
+                            <div class="form-group ">
+                                <label >Chán ăn hoặc ăn quá nhiều?</label>
+                                <select class="form-control" name="phq5">
+                                    <option value="0">Hầu như không</option>
+                                    <option value="1">Một vài ngày</option>
+                                    <option value="2">Hơn một nửa số thời gian</option>
+                                    <option value="3">Gần như mỗi ngày</option>
+                                </select>
+                            </div>
+                            <div class="form-group ">
+                                <label >Cảm thấy mình tệ, cho rằng mình là người thất bại hoặc đã làm cho chính mình hay gia đình thất vọng?</label>
+                                <select class="form-control" name="phq6">
+                                    <option value="0">Hầu như không</option>
+                                    <option value="1">Một vài ngày</option>
+                                    <option value="2">Hơn một nửa số thời gian</option>
+                                    <option value="3">Gần như mỗi ngày</option>
+                                </select>
+                            </div>
+                            <div class="form-group ">
+                                <label >Khó tập trung vào một việc gì đó, ví dụ như đọc báo hay xem tivi?</label>
+                                <select class="form-control" name="phq7">
+                                    <option value="0">Hầu như không</option>
+                                    <option value="1">Một vài ngày</option>
+                                    <option value="2">Hơn một nửa số thời gian</option>
+                                    <option value="3">Gần như mỗi ngày</option>
+                                </select>
+                            </div>
+                            <div class="form-group ">
+                                <label >Đi đứng hoặc nói năng chậm chạp khiến người khác chú ý. Hoặc ngược lại quá bồn chồn, đứng ngồi không yên cho nên bạn đã đi quanh quẩn nhiều hơn bình thường?</label>
+                                <select class="form-control" name="phq8">
+                                    <option value="0">Hầu như không</option>
+                                    <option value="1">Một vài ngày</option>
+                                    <option value="2">Hơn một nửa số thời gian</option>
+                                    <option value="3">Gần như mỗi ngày</option>
+                                </select>
+                            </div>
+                            <div class="form-group ">
+                                <label>Có ý nghĩ làm điều gì đó gây đau đớn cho bản thân hoặc nghĩ rằng thà mình chết đi cho rồi?</label>
+                                <select class="form-control" name="phq9">
+                                    <option value="0">Hầu như không</option>
+                                    <option value="1">Một vài ngày</option>
+                                    <option value="2">Hơn một nửa số thời gian</option>
+                                    <option value="3">Gần như mỗi ngày</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-success">Dự đoán</button>
+                    </div>
+                    <div th:if="${nameError}">
+                        <div class="errors mt-2">
+                            <span class="text-danger" th:text="${nameError}"></span>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="modal" id="errorModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Thông báo lỗi</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <h6 th:if="${ageError}" th:text="${ageError}"></h6>
+                    <h6 th:if="${genderError}" th:text="${genderError}"></h6>
+                    <h6 th:if="${happiness_scoreError}" th:text="${happiness_scoreError}"></h6>
+                    <h6 th:if="${phq1Error}" th:text="${phq1Error}"></h6>
+                    <h6 th:if="${phq2Error}" th:text="${phq2Error}"></h6>
+                    <h6 th:if="${phq3Error}" th:text="${phq3Error}"></h6>
+                    <h6 th:if="${phq4Error}" th:text="${phq4Error}"></h6>
+                    <h6 th:if="${phq5Error}" th:text="${phq5Error}"></h6>
+                    <h6 th:if="${phq6Error}" th:text="${phq6Error}"></h6>
+                    <h6 th:if="${phq7Error}" th:text="${phq7Error}"></h6>
+                    <h6 th:if="${phq8Error}" th:text="${phq8Error}"></h6>
+                    <h6 th:if="${phq9Error}" th:text="${phq9Error}"></h6>
+                    <h5>Vui lòng kiểm tra lại!</h5>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Kết quả dự đoán</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <h5>Thông tin bệnh nhân</h5>
+                    <p>Tuổi: <span th:text="${pointWritableRep?.age}"></span></p>
+                    <p>Giới tính:
+                        <span th:if="${pointWritableRep?.gender == '0'}">Nữ</span>
+                        <span th:if="${pointWritableRep?.gender == '1'}">Nam</span>
+                    </p>
+                    <p>Chỉ số hạnh phúc: <span th:text="${pointWritableRep?.happiness_score} + '/4'"></span></p>
+                    <p>Tổng điểm câu hỏi PHQ-9: <span th:text="${pointWritableRep?.depression_severity+ '/27'}"></span></p>
+                    <hr>
+                    <h5>Kết quả cụm</h5>
+                    <p id="result" style="font-size: 16px; font-weight: 600" th:if="${center}" th:text="${center}"></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script th:inline="javascript">
+        var haveError = /*[[${haveError}]]*/ null;
+        if (haveError) {
+            $('#errorModal').modal('show');
+        }
+
+        var result = /*[[${result}]]*/ null;
+        if (result) {
+            $('#exampleModal').modal('show');
+        }
+    </script>
+
+</body>
+</html>
