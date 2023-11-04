@@ -31,14 +31,23 @@ else:
 
 mycursor.execute("USE phq9_cluster")
 # Tạo một bảng trong database để lưu trữ các tâm cụm
-mycursor.execute("CREATE TABLE IF NOT EXISTS centers (id INT AUTO_INCREMENT PRIMARY KEY, age FLOAT, happiness_score FLOAT, total_period FLOAT, sex_female FLOAT, sex_male FLOAT, depression_severity FLOAT)")
+mycursor.execute("CREATE TABLE IF NOT EXISTS centers (id INT AUTO_INCREMENT PRIMARY KEY, age FLOAT, happiness_score FLOAT, total_period FLOAT, sex FLOAT, depression_severity FLOAT)")
 
 centers = kmeans_algorithm(5, pd.read_csv('./normalized_data.csv'))
 print("===========================================================")
 print(centers)
 
+# for row in centers:
+#     mycursor.execute("INSERT INTO centers (age, happiness_score, total_period, sex, depression_severity) VALUES (%s, %s, %s, %s, %s)", tuple(row))
 for row in centers:
-    mycursor.execute("INSERT INTO centers (age, happiness_score, total_period, sex_female, sex_male, depression_severity) VALUES (%s, %s, %s, %s, %s, %s)", tuple(row))
+    age = float(row[0])  # Chuyển đổi giá trị 'float64' thành float
+    happiness_score = float(row[2])
+    total_period = float(row[3])  # Điều này giả định rằng total_period là số nguyên
+    sex = float(row[1])
+    depression_severity = float(row[4])
+
+    mycursor.execute("INSERT INTO centers (age, happiness_score, total_period, sex, depression_severity) VALUES (%s, %s, %s, %s, %s)",
+                    (age, happiness_score, total_period, sex, depression_severity))
 
 mydb.commit()
 # Đóng kết nối

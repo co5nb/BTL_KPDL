@@ -6,22 +6,22 @@ def distance(x, centers):
     return np.linalg.norm(x - centers, axis=1)
 
 # Tạo bảng thông tin chi tiết về từng cụm
-def cluster_info(num_clusters, data):
-    cluster_summary = pd.DataFrame()
-    cluster_summary['Attribute'] = data.columns.drop('cluster')
-    cluster_summary.set_index('Attribute', inplace=True)
+def info_cluster(number_clusters, data):
+    cluster_info = pd.DataFrame()
+    cluster_info['Attribute'] = data.columns.drop('cluster')
+    cluster_info.set_index('Attribute', inplace=True)
 
     # Tính giá trị trung bình của các thuộc tính trong từng cụm
-    for i in range(num_clusters):
+    for i in range(number_clusters):
         cluster_data = data[data['cluster'] == i].drop(columns=['cluster'])
-        cluster_summary[f'Cluster {i}'] = cluster_data.mean()
+        cluster_info[f'Cluster {i}'] = cluster_data.mean()
 
     # Thêm cột tổng cộng của toàn bộ dữ liệu
-    cluster_summary['Full Data'] = data.drop(columns=['cluster']).mean()
+    cluster_info['Full Data'] = data.drop(columns=['cluster']).mean()
 
     # Hiển thị bảng thông tin chi tiết
-    print("\nFinal cluster centroids:")
-    print(cluster_summary)
+    print("\nTâm cụm cuối cùng:")
+    print(cluster_info)
 
     # Số lượng bệnh nhân trong mỗi cụm
     cluster_counts = data['cluster'].value_counts()
@@ -32,25 +32,25 @@ def cluster_info(num_clusters, data):
         print(f"Cụm {cluster_id}: {cluster_count} bệnh nhân ({cluster_count / len(data) * 100:.2f}%)")
 
 
-def kmeans_algorithm(num_clusters, data):
+def kmeans_algorithm(number_clusters, data):
     # Lấy tên cột và chuyển đổi data từ pandas => numpy
     columns_name = data.columns
     data = data.values
     # Khởi tạo các tâm cụm ban đầu ngẫu nhiên
     np.random.seed(42)
-    initial_centers_idx = np.random.choice(data.shape[0], size=num_clusters, replace=False)
-    initial_centers = data[initial_centers_idx]
+    start_center_index = np.random.choice(data.shape[0], size=number_clusters, replace=False)
+    start_centers = data[start_center_index]
 
     print("===========================================================")
-    print("Ba tâm cụm ban đầu:")
-    for i, initial_center in enumerate(initial_centers):
+    print(number_clusters , "tâm cụm ban đầu:")
+    for i, initial_center in enumerate(start_centers):
         center_str = ', '.join(format(x, '.5f') for x in initial_center)
-        print(f"Cluster center {i}: {center_str}")
+        print(f"Tâm cụm {i}: {center_str}")
 
     # Áp dụng thuật toán KMeans để phân cụm dữ liệu
     max_iters = 100
     tolerance = 1e-10
-    centers = initial_centers
+    centers = start_centers
     for iteration in range(max_iters):
         # Gán nhãn tâm cụm cho từng điểm dữ liệu
         distance_matrix = np.apply_along_axis(lambda x: distance(x, centers), axis=1, arr=data)
@@ -60,7 +60,7 @@ def kmeans_algorithm(num_clusters, data):
         old_centers = centers.copy()
         
         # Cập nhật trung tâm cụm
-        for i in range(num_clusters):
+        for i in range(number_clusters):
             cluster_points = data[labels == i]
             if len(cluster_points) > 0:
                 centers[i] = np.mean(cluster_points, axis=0)
@@ -75,5 +75,5 @@ def kmeans_algorithm(num_clusters, data):
     data['cluster'] = labels
 
     # Hiển thị thông tin các cụm sau khi hoàn thành
-    cluster_info(num_clusters, data)
+    info_cluster(number_clusters, data)
     return centers
