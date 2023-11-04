@@ -45,13 +45,13 @@ data['depression_severity'] = data[['phq1', 'phq2', 'phq3','phq4', 'phq5', 'phq6
 data = data.drop(columns = ['phq1', 'phq2', 'phq3','phq4', 'phq5', 'phq6','phq7', 'phq8', 'phq9'])
 
 # Tính giá trị trung bình của cột 'age' 
-mean_age = data['age'].mean()
+mean_age = data['age'].mean(skipna=True).round()
 # Thay thế NaN bằng giá trị trung bình
 data['age'].fillna(mean_age, inplace=True)
 
 # # Xóa cột "id"
 data = data.drop('id', axis = 1)
-data.to_csv('completed_data_noScaling.csv', index=False)
+data.to_csv('completed_data_noScaling_2.csv', index=False)
 # # Chuẩn hóa Min-Max Scaling cho các thuộc tính
 columns_to_scale = ['age', 'happiness.score', 'total.period', 'sex', 'depression_severity']
 data[columns_to_scale] = ((data[columns_to_scale] - data[columns_to_scale].min()) / 
@@ -59,4 +59,4 @@ data[columns_to_scale] = ((data[columns_to_scale] - data[columns_to_scale].min()
 
 print(data.isnull().sum())
 # data.info()
-data.to_csv('normalized_data.csv', index=False)
+data.to_csv('normalized_data_2.csv', index=False)
