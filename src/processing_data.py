@@ -51,7 +51,7 @@ data['age'].fillna(mean_age, inplace=True)
 
 # # Xóa cột "id"
 data = data.drop('id', axis = 1)
-
+data.to_csv('completed_data_noScaling.csv', index=False)
 # # Chuẩn hóa Min-Max Scaling cho các thuộc tính
 columns_to_scale = ['age', 'happiness.score', 'total.period', 'sex', 'depression_severity']
 data[columns_to_scale] = ((data[columns_to_scale] - data[columns_to_scale].min()) / 

@@ -1,12 +1,12 @@
 import mysql.connector
 import pandas as pd
-from kmeans_cluster import kmeans_algorithm
+from kmeans_cluster import kmeans_algorithm 
 
 # Kết nối đến MySQL
 mydb = mysql.connector.connect(
   host="localhost",
   user="root",
-  password="191816"
+  password="123456"
 )
 
 # Tạo một đối tượng cursor
@@ -54,3 +54,5 @@ mydb.commit()
 mydb.close()
 
 print("Các tâm cụm đã được lưu vào database 'PHQ9-cluster'!")
+# number_clusters = 5  # Số lượng cụm bạn muốn
+# cluster_labels = fit_predict_custom_kmeans(number_clusters, your_data) 

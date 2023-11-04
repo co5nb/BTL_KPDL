@@ -17,5 +17,6 @@ kmeans = KMeans(n_clusters = 5)
 
 kmeans.fit_predict(data)
 
-score = silhouette_score(data, kmeans.labels_, metric='euclidean')
-print('Silhouetter Average Score: %.3f' % score)
+data.to_csv('completed_data.csv', index=False)
+# score = silhouette_score(data, kmeans.labels_, metric='euclidean')
+# print('Silhouetter Average Score: %.3f' % score)
