@@ -37,7 +37,7 @@ data['depression_severity'] = data[['phq1', 'phq2', 'phq3','phq4', 'phq5', 'phq6
 data = data.drop(columns = ['phq1', 'phq2', 'phq3','phq4', 'phq5', 'phq6','phq7', 'phq8', 'phq9'])
 
 # Tính giá trị trung bình của cột 'age' 
-mean_age = data['age'].mean()
+mean_age = data['age'].mean(skipna=True).round()
 # Thay thế NaN bằng giá trị trung bình
 data['age'].fillna(mean_age, inplace=True)
 
