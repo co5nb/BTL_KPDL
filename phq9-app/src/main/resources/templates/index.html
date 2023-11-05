@@ -40,13 +40,13 @@
                                 <div class="col-md-5">
                                     <div class="form-group">
                                         <label >Tuổi:</label>
-                                        <input type="number" class="form-control" name="age" min="12" max="57" required>
+                                        <input type="number" class="form-control" name="age" min="5" max="80" required value="30">
                                     </div>
                                 </div>
                                 <div class="col-md-5">
                                     <div class="form-group">
                                         <label >Giới tính:</label>
-                                        <select class="form-control" name="gender">
+                                        <select class="form-control" name="sex">
                                             <option value="0">Nữ</option>
                                             <option value="1">Nam</option>
                                         </select>
@@ -56,11 +56,11 @@
                             <div class="form-group ">
                                 <label name="happiness_score">Bạn cảm thấy thế nào vào thời điểm này?</label>
                                 <select class="form-control" name="happiness_score">
-                                    <option value="0">Rất tệ</option>
-                                    <option value="1">Xấu</option>
+                                    <option value="4">Rất tệ</option>
+                                    <option value="3">Xấu</option>
                                     <option value="2">Vừa phải</option>
-                                    <option value="3">Tốt</option>
-                                    <option value="4">Rất tốt</option>
+                                    <option value="1" selected>Tốt</option>
+                                    <option value="0">Rất tốt</option>
                                 </select>
                             </div>
                             <div class="form-group ">
@@ -207,8 +207,8 @@
                     <h5>Thông tin bệnh nhân</h5>
                     <p>Tuổi: <span th:text="${pointWritableRep?.age}"></span></p>
                     <p>Giới tính:
-                        <span th:if="${pointWritableRep?.gender == '0'}">Nữ</span>
-                        <span th:if="${pointWritableRep?.gender == '1'}">Nam</span>
+                        <span th:if="${pointWritableRep?.sex == '0'}">Nữ</span>
+                        <span th:if="${pointWritableRep?.sex == '1'}">Nam</span>
                     </p>
                     <p>Chỉ số hạnh phúc: <span th:text="${pointWritableRep?.happiness_score} + '/4'"></span></p>
                     <p>Tổng điểm câu hỏi PHQ-9: <span th:text="${pointWritableRep?.depression_severity+ '/27'}"></span></p>

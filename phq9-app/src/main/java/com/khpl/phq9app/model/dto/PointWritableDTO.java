@@ -11,12 +11,12 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class PointWritableDTO {
-    @Pattern(regexp = "^(1[2-9]|[2-4][0-9]|5[0-7])$", message = "Tuổi không hợp lệ")
+    @Pattern(regexp = "^(?:[5-9]|[1-7][0-9]|80)$", message = "Tuổi không hợp lệ")
     private String age;
 
 
     @Pattern(regexp = "^[01]$", message = "Giới tính không hợp lệ")
-    private String gender;
+    private String sex;
 
     @Pattern(regexp = "^[0-4]$", message = "Đáp án cho câu hỏi happiness score không hợp lệ")
     private String happiness_score;

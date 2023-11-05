@@ -53,11 +53,24 @@ public class CenterController {
         PointWritable pointWritable = getPointWritable(pointWritableDTO);
         PointWritableRep pointWritableRep = new PointWritableRep();
         pointWritableRep.setAge(pointWritableDTO.getAge());
-        pointWritableRep.setGender(pointWritableDTO.getGender());
+        pointWritableRep.setSex(pointWritableDTO.getSex());
         pointWritableRep.setHappiness_score((int) pointWritable.getHappiness_score());
         pointWritableRep.setDepression_severity((int) pointWritable.getDepression_severity());
 
-        String prediction = centerService.predict(centers, pointWritable).toString();
+        Center centerPredict = centerService.predict(centers, pointWritable);
+        Long centerId = centerPredict.getId();
+        String prediction = "";
+        if(centerId == 1L){
+            prediction = "Cụm 0: Mức độ trầm cảm của bệnh nhân nam ở mức nặng vừa phải. Cần điều trị tích cực bằng liệu pháp tâm lý, dùng thuốc";
+        } else if(centerId == 2L) {
+            prediction = "Cụm 1: Mức độ trầm cảm của bệnh nhân nam ở mức nhẹ. Chỉ cần theo dõi và không cần điều trị";
+        } else if (centerId == 3L) {
+            prediction = "Cụm 2: Mức độ trầm cảm của bệnh nhân nữ ở mức vừa phải. Cần theo dõi thêm";
+        } else if (centerId == 4L) {
+            prediction = "Cụm 3: Mức độ trầm cảm của bệnh nhân nữ ở mức nặng vừa phải. Cần điều trị tích cực và theo dõi";
+        } else {
+            prediction = "Cụm 4: Mức độ trầm cảm của bệnh nhân nữ ở mức nặng. Cần theo dõi và điều trị tích cực bằng liệu pháp tâm lý kết hợp dùng thuốc";
+        }
 
         redirectAttributes.addFlashAttribute("center", prediction);
         redirectAttributes.addFlashAttribute("pointWritableRep", pointWritableRep);
@@ -87,12 +100,10 @@ public class CenterController {
         pointWritable.setAge(age);
         pointWritable.setHappiness_score(happiness_score);
         pointWritable.setDepression_severity(depression_severity);
-        if(pointWritableDTO.getGender().equals("0")) {
-            pointWritable.setSex_female(0);
-            pointWritable.setSex_male(1);
+        if(pointWritableDTO.getSex().equals("0")) {
+            pointWritable.setSex(0);
         }else {
-            pointWritable.setSex_female(1);
-            pointWritable.setSex_male(0);
+            pointWritable.setSex(1);
         }
 
         return pointWritable;

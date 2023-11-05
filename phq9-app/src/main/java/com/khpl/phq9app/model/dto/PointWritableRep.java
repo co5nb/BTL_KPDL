@@ -11,7 +11,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class PointWritableRep {
     private String age;
-    private String gender;
+    private String sex;
     private int happiness_score;
     private int depression_severity;
 }

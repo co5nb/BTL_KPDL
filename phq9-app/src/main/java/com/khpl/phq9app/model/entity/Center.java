@@ -16,8 +16,6 @@ public class Center {
     private Long id;
     private float age;
     private float happiness_score;
-    private float total_period;
-    private float sex_female;
-    private float sex_male;
+    private float sex;
     private float depression_severity;
 }

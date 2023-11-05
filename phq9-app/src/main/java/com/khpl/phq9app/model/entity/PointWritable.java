@@ -15,8 +15,6 @@ public class PointWritable {
     private Long id;
     private float age;
     private float happiness_score;
-    private float total_period = 0;
-    private float sex_female;
-    private float sex_male;
+    private float sex;
     private float depression_severity;
 }
