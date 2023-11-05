@@ -43,8 +43,6 @@ print("Số lần xuất hiện của 'transgender':", transgender_count)
 
 # ==>thấy được female nhiều hơn nhiều nên thay thế các giá trị NaN thành female
 
-
-
 min_age = data['age'].min()
 max_age = data['age'].max()
 

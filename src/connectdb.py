@@ -6,7 +6,7 @@ from kmeans_cluster import kmeans_algorithm
 mydb = mysql.connector.connect(
   host="localhost",
   user="root",
-  password="123456"
+  password="191816"
 )
 
 # Tạo một đối tượng cursor
@@ -31,28 +31,25 @@ else:
 
 mycursor.execute("USE phq9_cluster")
 # Tạo một bảng trong database để lưu trữ các tâm cụm
-mycursor.execute("CREATE TABLE IF NOT EXISTS centers (id INT AUTO_INCREMENT PRIMARY KEY, age FLOAT, happiness_score FLOAT, total_period FLOAT, sex FLOAT, depression_severity FLOAT)")
+mycursor.execute("CREATE TABLE IF NOT EXISTS centers (id INT AUTO_INCREMENT PRIMARY KEY, age FLOAT, happiness_score FLOAT, sex FLOAT, depression_severity FLOAT)")
 
 centers = kmeans_algorithm(5, pd.read_csv('./normalized_data.csv'))
 print("===========================================================")
-print(centers)
+# print(centers)
 
 # for row in centers:
 #     mycursor.execute("INSERT INTO centers (age, happiness_score, total_period, sex, depression_severity) VALUES (%s, %s, %s, %s, %s)", tuple(row))
 for row in centers:
     age = float(row[0])  # Chuyển đổi giá trị 'float64' thành float
     happiness_score = float(row[2])
-    total_period = float(row[3])  # Điều này giả định rằng total_period là số nguyên
     sex = float(row[1])
-    depression_severity = float(row[4])
+    depression_severity = float(row[3])
 
-    mycursor.execute("INSERT INTO centers (age, happiness_score, total_period, sex, depression_severity) VALUES (%s, %s, %s, %s, %s)",
-                    (age, happiness_score, total_period, sex, depression_severity))
+    mycursor.execute("INSERT INTO centers (age, happiness_score, sex, depression_severity) VALUES (%s, %s, %s, %s)",
+                    (age, happiness_score, sex, depression_severity))
 
 mydb.commit()
 # Đóng kết nối
 mydb.close()
 
 print("Các tâm cụm đã được lưu vào database 'PHQ9-cluster'!")
-# number_clusters = 5  # Số lượng cụm bạn muốn
-# cluster_labels = fit_predict_custom_kmeans(number_clusters, your_data) 

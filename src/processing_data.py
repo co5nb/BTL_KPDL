@@ -6,19 +6,10 @@ import numpy as np
 data = pd.read_csv('./rawdata/Dataset_14-day_AA_depression_symptoms_mood_and_PHQ-9.csv')
 data.info()
 
-# Xóa các cột không cần thiết "stt", "user_id", "period.name", "phq.day"
-data = data.drop(columns=['stt', 'user_id', 'period.name', 'phq.day'])
+# Xóa các cột không cần thiết "stt", "user_id", "period.name", "phq.day", "time", "start.time"
+data = data.drop(columns=['stt', 'user_id', 'period.name', 'phq.day', 'time', 'start.time'])
 # Xóa các cột q1 đến q14, q16, q46, q47 thì null quá nhiều
 data = data.drop(columns = ['q1', 'q2', 'q3','q4', 'q5', 'q6','q7', 'q8', 'q9', 'q10', 'q11', 'q12', 'q13', 'q14', 'q16', 'q46', 'q47'])
-
-# Chuyển "time" và "start.time" thành kiểu dữ liệu "datetime"
-data['time'] = pd.to_datetime(data['time'])
-data['start.time'] = pd.to_datetime(data['start.time'])
-# Tổng hợp kết quả 2 cột "time" và "start.time" thành cột "total.period"
-data['total.period'] = (data['time'] - data['start.time']).dt.days
-# Xóa 2 cột "time" và "start.time" 
-data = data.drop(columns=['time', 'start.time'])
-
 
 # xử lý phq bị thiếu
 for i in range(1, 10):
@@ -38,6 +29,7 @@ data = data.drop(data[data['sex'] == 'transgender'].index)
 
 # Chuyển các giá trị của cột 'sex' thành các giá trị là 0 và 1 tương ứng
 data['sex'] = data['sex'].replace({'male': 1, 'female': 0})
+data['happiness.score'] = data['happiness.score'].replace({4 : 0, 3 : 1, 1 : 3, 0 : 4})
 
 # Cộng tổng các cột phq1 đến phq9 thành cột "depression_severity"
 data['depression_severity'] = data[['phq1', 'phq2', 'phq3','phq4', 'phq5', 'phq6','phq7', 'phq8', 'phq9']].sum(axis=1)
@@ -51,9 +43,10 @@ data['age'].fillna(mean_age, inplace=True)
 
 # # Xóa cột "id"
 data = data.drop('id', axis = 1)
+
 data.to_csv('completed_data_noScaling.csv', index=False)
 # # Chuẩn hóa Min-Max Scaling cho các thuộc tính
-columns_to_scale = ['age', 'happiness.score', 'total.period', 'sex', 'depression_severity']
+columns_to_scale = ['age', 'happiness.score', 'sex', 'depression_severity']
 data[columns_to_scale] = ((data[columns_to_scale] - data[columns_to_scale].min()) / 
                          (data[columns_to_scale].max() - data[columns_to_scale].min()))
 
